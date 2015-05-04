@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Main_page";
+}
+<!DOCTYPE html>
+<link href="../../Content/Style.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+<div class="headerMain">
+<div class="TopLine"></div>
+<div class="logoDiv"></div>
+<div class="Menu">
+<div><a class="menutxt" href="/Admin/Main_home/" >Home</a></div>
+<div><a class="menutxt" href="/Admin/Admin_login/">Admin Login</a></div>
+<div><a class="menutxt" href="/Admin/Login/">Customer Login</a></div>
+@*<div><a class="menutxt" href="/Admin/Search_medicine/">Search Medicine</a></div>*@
+@*<div><a class="menutxt" href="/Admin/Aboutus">About us</a></div>*@
+    
+<div><a class="menutxt" href="/Admin/Feedbackform/">Feedback</a></div>
+@*    <div><a class="menutxt" href="/Admin/Contactus/">Contact Us</a></div>*@
+
+@*<div><a class="menutxt" href="/Admin/Invoice">Invoice</a></div>*@
+@*<div><a class="menutxt" href="">Contact Us</a></div>*@
+</div>
+</div>
+    
+    <div>
+        @RenderBody()
+    </div>
+    <div class="footer">
+    Always there for your Assistance
+    </div>
+    <div class="footer2">
+    Copyright &#169; Medico Solutions Ltd. For more Information Contact:+91888888888
+    </div>
+</body>
+</html>
+

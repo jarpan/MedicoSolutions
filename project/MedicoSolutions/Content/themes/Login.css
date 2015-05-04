@@ -1,0 +1,205 @@
+﻿.body
+{
+background-color:#EEF3FA;    
+}
+
+.mainouterdiv
+{
+width:1014px;
+height:650px;
+margin: 0 Auto;
+background-color:White; 
+
+}
+
+.maindiv
+{
+float:left;
+margin-top:6px;
+margin-left:6px;
+width:1001px;
+height:640px;
+}
+
+.mainleft
+{
+margin-top:5px;
+margin-left:2px;
+width:643px;   
+height:505px;    
+float:left;  
+background-image:url(../../Content/Images/9.jpg);
+}
+.mainright
+{
+margin-top:5px;
+margin-left:0px;
+width:356px;   
+height:505px;
+float:right; 
+}
+
+.mainrighttop
+{
+width:354px;   
+height:111px;
+margin-left:2px;
+background-color: whitesmoke;
+}
+
+.mainrighttop1
+{
+width:300px;   
+height:70px; 
+margin-left:20px; 
+background-image: url(../../Content/Images/logo_flat.png);     
+}
+
+.mainrighttop2
+{
+margin-left:130px;
+width:239px;   
+height:59px; 
+}
+
+.logoimgtext
+{
+width:100px;   
+height:32px;  
+margin-left:2px;
+margin-top:15px;  
+padding-top:7px;    
+
+float:left;    
+}
+
+.mainbottom
+{
+margin-top:510px;
+width:1001px;   
+height:127px;   
+background-color:ButtonFace;
+     
+}
+
+.span1
+{
+ width:990px;
+ height:37px;  
+ margin-top:40px;
+ text-align: center;
+	  color:black;
+	font-family: Segoe UI;
+	font-size: 25px;
+	font-weight: bold;
+   
+ padding-left:10px;
+ margin-left:2px;
+ float:left;  
+}
+.span2
+{
+ width:990px;
+ height:25px;  
+ margin-top:2px;
+  text-align: center;
+  color:black;
+	
+	font-family: Segoe UI;
+	font-size: 12px;
+	font-weight: bold;
+ 
+ padding-top:10px; 
+ padding-left:10px;
+ margin-left:10px; 
+ float:left; 
+}
+.Logintxt
+{
+font-size: 33px;
+color: black;
+font-family: segoe ui;
+}
+
+
+
+.Profile_img 
+{
+    width: 96px;
+    height: 96px;
+    margin-left: 89px;
+    margin-right: 89px;
+    margin-bottom: 10px;
+    background-image: url(../../Content/Images/Picture1.png);
+
+}
+.LoginCenter 
+{
+    
+   width: 274px;
+    height: 310px;
+    margin-left: 2px;
+    margin-right: 453.500px;
+    margin-bottom: 20px;
+    padding-bottom: 40px;
+    padding-right: 40px;
+    padding-top: 40px;
+    padding-left: 40px;
+
+background-color: whitesmoke;
+
+}
+.Logintxtfield 
+{
+width: 256px;
+height: 42px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 0px;
+border-radius: 30px;
+padding-bottom: 0px;
+outline: none;
+border: none;
+}
+.Loginpasswordfield 
+{
+    width: 256px;
+    height: 42px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 15px;
+}
+.Servicelogin 
+{
+    height: 198px;
+}
+
+.signin
+
+{
+	cursor:pointer;
+	outline:none;
+  border-right-width: 1px;
+padding-right: 0px;
+width: 200px;
+margin-bottom: 5px;
+height: 34px;
+padding-top: 0px;
+padding-left: 0px;
+padding-bottom: 0px;
+border-top-width: 1px;
+border-left-width: 1px;
+border-bottom-width: 1px;
+color: white;
+margin-left:35px;
+background-color: #00b2d9;
+font-family: segoe ui;
+font-weight: bold;
+}
+.or 
+{
+    text-align: center;
+    margin-bottom: 5px;
+}

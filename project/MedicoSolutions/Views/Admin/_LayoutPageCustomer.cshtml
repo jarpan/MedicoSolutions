@@ -1,0 +1,82 @@
+﻿
+<!DOCTYPE html>
+<link href="../../Content/Style.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function logout() {
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/logout",
+           // contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                if (response == true) {
+                    window.location.href = '/Admin/Main_home'
+                }
+
+                
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                debugger;
+              alert("Error");
+            }
+        });
+
+    }
+    function logout1() {
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/Del_Email_row",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+               // alert("Error");
+            }
+        });
+
+    }
+</script>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+<div class="headerMain">
+<div class="TopLine"></div>
+<div class="logoDiv"></div>
+     <div  onclick="logout(); logout1(); "style="float: right; margin-right: 15px; font-family: segoe ui; font-size: 14px; font-weight: bold; cursor: pointer; color:#00A360; margin-top:10px;">
+            Logout
+
+        </div>
+<div class="Menu2">
+<div><a class="menutxt" href="/Admin/Customerhome/" >Home</a></div>
+<div><a class="menutxt" href="/Admin/Customershowinvoice/">Show invoice</a></div>
+<div><a class="menutxt" href="/Admin/Maps/">Find near chemist shops</a></div>
+ <div><a class="menutxt" href="/Admin/Search_medicine/">Search Medicine</a></div>
+
+@*<div><a class="menutxt" href="/Admin/Feedbackform/">Feedback</a></div>*@
+@*<div><a class="menutxt" href="/Admin/Invoice">Invoice</a></div>*@
+@*<div><a class="menutxt" href="">Contact Us</a></div>*@
+</div>
+</div>
+    
+    <div>
+        @RenderBody()
+    </div>
+    <div class="footer">
+    Always there for your Assistance
+    </div>
+    <div class="footer2">
+    Copyright &#169; Medico Solutions Ltd. For more Information Contact:+91888888888
+    </div>
+</body>
+</html>

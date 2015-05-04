@@ -1,0 +1,190 @@
+﻿ @{
+     Layout = "~/Views/Admin/_LayoutPageCustomer.cshtml";
+
+}
+
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script>
+       
+
+
+        var map;
+        function initialize() {
+            
+            var mapOptions = {
+                zoom: 6
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+
+            // Try HTML5 geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = new google.maps.LatLng(position.coords.latitude,
+                                                     position.coords.longitude);
+                   
+                    var infowindow = new google.maps.InfoWindow({
+                        map: map,
+                        position: pos,
+                        content: 'Location found using HTML5.'
+                    });
+
+                    map.setCenter(pos);
+                }, function () {
+                    handleNoGeolocation(true);
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleNoGeolocation(false);
+            }
+
+            function handleNoGeolocation(errorFlag) {
+                if (errorFlag) {
+                    var content = 'Error: The Geolocation service failed.';
+                } else {
+                    var content = 'Error: Your browser doesn\'t support geolocation.';
+                }
+      }
+            var image = '/Content/Images/Map-Marker-Marker-Outside-Azure.png';
+
+
+           var infowindow = new google.maps.InfoWindow();
+            var locations = [];
+           
+
+            locations.push({
+                name:'SHOP IN DELHI', latlng: new google.maps.LatLng(28.6560855, 77.2862808), descriptions: '<div id="content">' +
+          '<div id="siteNotice">' +
+          '</div>' +
+          '<h1 id="firstHeading" class="firstHeading">Smarth Medicos</h1>' +
+          '<div id="bodyContent">' +
+          '<p>B-17, East Krishna Nagar,' +
+          'Swarn Cinema Road, Near Shri ' +
+          'Ram Hospital </br>' +
+          '<b>New Delhi, Delhi 110051 </b> </br>' +
+          'Contact no - <b> 09211158200 </b>' +
+          '</p>' +
+          '</div>' +
+          '</div>'
+            });
+            locations.push({
+                name: "SHOP IN NOIDA", latlng: new google.maps.LatLng(28.53274, 77.388672), descriptions: '<div id="content">' +
+              '<div id="siteNotice">' +
+              '</div>' +
+              '<h1 id="firstHeading" class="firstHeading">Jay Cee Medicos</h1>' +
+              '<div id="bodyContent">' +
+              '<p>13, Sector 110, Opposite ' +
+              'Kendriya Vihar, </br> ' +
+              '<b>Noida, Uttar Pradesh 201301 </b> </br>' +
+              'Contact no - <b> 099580 17730 </b>' +
+              '</p>' +
+              '</div>' +
+              '</div>'
+            });
+
+            locations.push({
+                name: "SHOP IN GHAZIABAD", latlng: new google.maps.LatLng(28.669579, 77.4598), descriptions: '<div id="content">' +
+              '<div id="siteNotice">' +
+              '</div>' +
+              '<h1 id="firstHeading" class="firstHeading">Vashistha Medical Agencies</h1>' +
+              '<div id="bodyContent">' +
+              '<p>341/16-b, Shastri Nagar </br>' +
+              '<b>Ghaziabad, Uttar Pradesh 201301 </b> </br>' +
+              'Contact no - <b> 093369 18700 </b>' +
+              '</p>' +
+              '</div>' +
+              '</div>'
+            });
+
+
+            for (var i = 0; i < locations.length; i++)
+            {
+                var marker = new google.maps.Marker({
+                    position: locations[i].latlng,
+                    map:map,
+                    title: locations[i].name,
+                    description: locations[i].descriptions,
+                    icon: image
+                    
+                    
+                });
+                
+                
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.setContent(this.description);
+                    infowindow.open(map, this);
+                });
+            }
+     
+            // NEARBY SEARCH BY USING TEXT SEARCH
+            var pyrmont = new google.maps.LatLng(28.522415,77.367909);
+
+
+            var request = {
+                location: pyrmont,
+                radius: 500,
+                query: 'medico'
+
+            };
+            var infowindow1 = new google.maps.InfoWindow();
+
+            service = new google.maps.places.PlacesService(map);
+            service.textSearch(request, callback);
+
+            //var service = new google.maps.places.PlacesService(map);
+            //service.nearbySearch(request, callback);
+
+
+
+
+            function callback(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                }
+            }
+
+            function createMarker(place) {
+                var placeLoc = place.geometry.location;
+                var marker1 = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+
+                google.maps.event.addListener(marker1, 'click', function () {
+                    infowindow1.setContent(place.name);
+                    infowindow1.open(map, this);
+                });
+            }
+
+
+            
+
+   
+           }   // function close
+        
+
+      
+        
+         google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+<div class="VendorCenter" style="height: 500px;">
+    <div id="map-canvas"></div>
+    </div>
+
+<style>
+         #map-canvas {
+            height: 100%;
+           /*margin-top:40px;
+           margin-left:40px;
+           margin-right:40px;
+           margin-bottom:40px;*/
+            padding: 0px;
+        }
+    </style>

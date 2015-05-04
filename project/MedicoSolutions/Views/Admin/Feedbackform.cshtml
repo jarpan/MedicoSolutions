@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Feedbackform";
+    Layout = "~/Views/Admin/Main_page.cshtml";
+}
+<script>
+
+    function Savefeedback1data() {
+        debugger;
+        var message = $('#txtmessage').val();
+        var email = $('#txtemail').val();
+        var question1 = $('#txtsatisfy').val();
+        var question2 = $('#stimulat').val();
+        var question3 = $('#visit').val();
+
+        for (var i = 0; i < $('#ddlcomp > option').length; i++) {
+
+
+        }
+
+             $.ajax({
+            type: "Get",
+            data: { message: message, email: email, question1: question1, question2: question2, question3: question3 },
+            url: "/Admin/Savefeedback1data",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+    function Form1() {
+        alert("Feed back form submitted ");
+        alert("Thank You for your Valuable time");
+        }
+    </script>
+
+
+
+
+<div class="feedbackCenter" style="height: 700px;">
+    <div class="headind">
+        FEEDBACK FORM</div>
+
+<form name="feed" >
+ 
+
+
+
+
+<div class="ques">
+
+
+<br><br>Ques:-Are we able to satisfy your need in term of performance?<br><br>
+<INPUT TYPE="RADIO" NAME="satisfy" id="txtsatisfy" VALUE="Yes" >YES                <INPUT TYPE="RADIO" NAME="satisfy" VALUE="No">NO<br>
+<br><br>
+      Ques:-Were you able to complete the primary purpose of your website visit today?
+<br><br>
+<INPUT TYPE="RADIO" NAME="stimulat" id="stimulat" VALUE="Yes" >YES                    <INPUT TYPE="RADIO" NAME="stimulat" VALUE="No">NO<br>
+<br><br>
+    Ques:-Based on today's visit,how would you rate you site experience overall?<BR><BR>
+    <input type="RADIO" name ="visit" id="visit" value ="Bad"  >0-3 (BAD)<br>
+    <input type="RADIO" name ="visit" id="visit" value ="Good"  >4-7 (GOOD)<br>
+    <input type="RADIO" name ="visit" id="visit" value ="OutStanding"  >8-10 (OUTSTANDING)<br>
+    <BR>
+
+
+
+
+
+
+
+Do you have any additional thoughts on the topic of the survey?<br>
+<TEXTAREA NAME="customerRequest" id="txtmessage" ROWS="2"  COLS="50">
+</TEXTAREA><br>
+    <br>
+
+
+To complete this survey please type your e-mail address below:
+<BR>
+
+<INPUT TYPE="text" NAME="customerEmail" id="txtemail" SIZE=40 MAXLENGTH=80>
+<br><br><br><br>
+    
+Thank you for taking the survey.  To submit the results, press the SUBMIT button 
+</div>
+
+
+@*<div>
+        <input type="submit" value="Submit" onsubmit="Savefeedback1data()"/>
+    </div>*@
+<div class="st" id="Submit" onclick="Savefeedback1data()" > 
+    
+SUBMIT 
+</div>
+</form>
+</div>
+</body>
+</html>
+
+
+
+
+
+<style>
+ .sty {
+padding-left: 0px;
+padding-right: 0px;
+padding-top: 0px;
+padding-bottom: 0px;
+border-top-width: 0px;
+border-bottom-width: 0px;
+border-right-width: 0px;
+border-left-width: 0px;
+}
+    .st {
+        padding-left: 40px;
+padding-right: -9;
+border-left-width: 15px;
+margin-left: 800px;
+margin-bottom: 15px;
+cursor:pointer;
+	width: 100px;
+	color: white;
+	background-color: #00afd4;
+}
+    .feedbackCenter
+{
+margin: 0 auto;
+width: 1024px;
+background-color: #efefef;
+height: 235px;
+margin-top: 7px;
+font-family: Segoe UI;
+	font-size: 15px;
+	font-variant: small-caps;
+	color: black;
+}
+    .ques {
+padding-left: 100px;
+margin-bottom: 30px;
+}
+    </style>

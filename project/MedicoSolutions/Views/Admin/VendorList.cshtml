@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "VendorList";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+
+<link href="../../Content/Style.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        GetVendor();
+    });
+
+    function GetVendor() {
+
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/GetVendorName",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                GridData(response);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+
+    }
+
+    var Html = "";
+    function GridData(response) {
+
+        if (response.length == 0) {
+            Html += "<div > No Records To Display"
+            Html += "</div>";
+        }
+        else {
+            for (var i = 0; i < response.length; i++) {
+                Html += "<div class='InnerGridText'>" + response[i].name + "</div>";
+                Html += "<div class='InnerGridText'>" + response[i].phno + "</div>";
+                var act = "";
+                if (response[i].IsActive == 1) {
+                    act = "Active";
+                }
+                else {
+                    act = "Inactive";
+                }
+                Html += "<div class='InnerGridText'>" + act + "</div>";
+                Html += "<div class='InnerGridText '>";
+
+                Html += "<a href='/admin/vendor/Vendor_Id=?" + response[i].vendor_id + "'>";
+                Html += "<div class='actionedit'>";
+                Html += "    </div></a>";
+
+                Html += "<a onclick=\" return deletevendor('" + response[i].vendor_id + "')\">";
+                Html += "<div class='actiondel' ></div></a>";
+                Html += "</div>";
+            }
+        }
+        document.getElementById('GridData').innerHTML = Html;
+    }
+    function deletevendor(vendorid) {
+        if (confirm("Are you sure that you want to delete Vendor")) {
+            $.post("/Admin/DeleteVendor", { vendorid: vendorid },
+             function (result) {
+                 if (result == true)
+                     alert("Vendor deleted successfully");
+                 window.location.reload();
+             });
+            return false;
+        }
+    }
+
+</script>
+<div class="VendorCenter" style="height: 450px;">
+    <div class="headind">
+        Vendor's</div>
+    <div class="ParentGridDiv">
+        <div class="Header">
+            Name</div>
+        <div class="Header">
+            Phone Number</div>
+        <div class="Header">
+            Status</div>
+        <div class="Header">
+            Action</div>
+        <div class="HtmlData" id="GridData">
+        </div>
+    </div>
+
+         <div class="AddVendor" id="btnSubmit" onclick="SaveMedicinedata()">
+                <a href='/admin/vendor' style="text-decoration:none; color:White;">    Add Vendor</a></div>
+</div>
+
+

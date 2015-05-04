@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Admin_customer";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+<link href="../../Content/Style.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        GetCustomers();
+    });
+
+    function GetCustomers() {
+
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/GetCustomers",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                GridData(response);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+
+    }
+
+    function GridData(response)
+    {
+        var Html = "";
+
+        if (response.length == 0)
+        {
+            Html += "<div > No Records To Display"
+            Html += "</div>";
+        }
+        else
+        {
+            debugger;
+            for (var i = 0; i < response.length; i++)
+            {
+
+                Html += "<div class='InnerGridText123'>" + response[i].email + "</div>";
+                Html += "<div class='InnerGridText123' >" + response[i].name + "</div>";
+                Html += "<div class='InnerGridText123'>" + response[i].phno + "</div>";
+
+               
+            }
+           
+        }
+
+        document.getElementById('GridData').innerHTML = Html;
+        
+    } function GridData(response) {
+        var Html = "";
+
+        if (response.length == 0) {
+            Html += "<div > No Records To Display"
+            Html += "</div>";
+        }
+        else {
+            debugger;
+            for (var i = 0; i < response.length; i++) {
+                Html += "<div class='InnerGridText'>" + response[i].email + "</div>";
+                Html += "<div class='InnerGridText'>" + response[i].name + "</div>";
+
+                Html += "<div class='InnerGridText'>" + response[i].phno + "</div>";
+                Html += "<div class='InnerGridText '>"+ response[i].password+"</div>";
+
+                
+            }
+        }
+        document.getElementById('GridData').innerHTML = Html;
+    }
+
+    </script>
+
+<div class="VendorCenter" style="height: 450px;">
+    <div class="headind">
+       Customers</div>
+    <div class="ParentGridDiv">
+        <div class="Header">
+         UserId</div>
+        <div class="Header">
+          Name  
+            </div>
+        <div class="Header">
+           Phno
+            </div>
+        <div class="Header">
+         Password</div>
+        <div class="HtmlData" id="GridData">
+        </div>
+    </div>
+
+        
+</div>

@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<link href="../../Content/themes/Login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+
+
+    function login1() {
+        var email = $('#txtEmail').val();
+        var password = $('#txtPasswd').val();
+        $.ajax({
+            type: "Get",
+            data: { email: email, password: password },
+            url: "/Admin/DoLogin",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response == -1)
+                    alert("Invalid username or password");
+                else {
+                    window.location.href = '/Admin/Customerhome';
+                }
+            }
+        });
+
+    }
+
+    function Store_email_id() {
+        debugger;
+        var email = $('#txtEmail').val();
+        
+        $.ajax({
+            type: "Get",
+            data: { email: email },
+            url: "/Admin/Store_email_id",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+               
+            }
+        });
+
+    }
+
+</script>
+<body class="body">
+    <div class="mainouterdiv">
+        <div class="maindiv">
+            <div class="mainleft">
+            </div>
+            <div class="mainright">
+                <div class="mainrighttop">
+                        <div class="mainrighttop1">
+                    </div>
+                    <div class="mainrighttop2">
+                    <div class="logoimgtext">
+                            <span class="Logintxt">Login</span></div>
+                 </div>
+                    
+                  
+                    </div>
+               
+                     <div class="LoginCenter">
+<div class="Profile_img">
+</div>
+<div class="Servicelogin">
+      <input id="txtEmail" name="Email" type="email" placeholder="Email" value="" spellcheck="false" class="Logintxtfield" />
+      <input id="txtPasswd" style="margin-top:10px;" name="Passwd" type="password" placeholder="Password" class="Logintxtfield"/>
+      <input id="signIn" name="signIn"  type="submit" style="margin-top: 25px;border-radius: 20px;" value="Sign in" class="signin" onclick="login1(); Store_email_id();"/> 
+</div>
+</div>
+                
+            </div>
+            <div class="mainbottom">
+                <div class="span1">
+                    Always there for your Assistance
+                </div>
+                <div class="span2">
+                 Copyright &#169; Medico Solutions Ltd. For more Information Contact:+91888888888
+
+                </div>
+              
+            </div>
+                </div>
+          </div> 
+    
+</body>
+

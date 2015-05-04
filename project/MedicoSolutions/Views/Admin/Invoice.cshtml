@@ -1,0 +1,588 @@
+﻿
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+<script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function cleardropdown() {
+        $('#ddlmedicine1').empty();
+        $('#ddlmedicine1').each(function () {
+            var option = $("<option />");
+            option.attr("value", '0').text('---Select Batch_no---');
+            $('#ddlmedicine1').append(option);
+        });
+    }
+
+    function sendsms() {
+        var name = $('#txtname').val();
+        var phoneno = $('#phoneno').val();
+        $.post("/Admin/sms", { name: name, phoneno: phoneno },
+             function (result) {
+                 if (result == true)
+                     alert("Message sent successfully");
+                 window.location.reload();
+             });
+
+    }
+
+    function showuserDiv() {
+        $('#ddluserlist').hide();
+        $('#UserInfoData').toggle();
+        $('#InvoiceP').hide();
+    }
+    function ShowUserList() {
+        $('#ddluserlist').toggle();
+        $('#UserInfoData').hide();
+        $('#InvoiceP').hide();
+    }
+    function ShowInvoice() {
+        $('#ddluserlist').hide();
+        $('#UserInfoData').hide();
+        $('#InvoiceP').show();
+    }
+    $(document).ready(function () {
+        getuserdetails();
+        $("#InvoiceP1").hide();
+
+        GetMedicine();
+        $('#ddlmedicine').change(function () {
+            getbatchno();
+        });
+
+        $('#ddlmedicine1').change(function () {
+            getMrp();
+
+        });
+
+
+        $('#userlist').change(function () {
+
+            getdetailsfromemail();
+        });
+    });
+
+
+    // for accounting
+    function getbatchno() {
+
+        var medname = $('#ddlmedicine :selected').text();
+
+        $.ajax({
+            type: "Get",
+            data: { medname: medname },
+            url: "/Admin/getbatchno",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#ddlmedicine1").append($("<option></option>").html(response[i].Batch_no));
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+    }
+
+    function SaveUserdata() {
+        var name = $('#txtname').val();
+        var email = $('#email').val();
+        var phoneno = $('#phoneno').val();
+        $.ajax({
+            type: "Get",
+            data: { name: name, email: email, phoneno: phoneno },
+            url: "/Admin/SaveUserdata",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+                $('#userlist').html("").append($("<option></option>").val('--Select User--').html('--Select User--'));
+                ShowUserList();
+                getuserdetails();
+            }
+        });
+
+    }
+    function getuserdetails() {
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/GetUserDetails",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#userlist").append($("<option></option>").val(response[i].email).html(response[i].email));
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+    }
+
+
+
+    //account
+
+    var quantity;
+    var quanityMedicine;
+    var batch;
+    function UpdateQuantity() {
+        //var batch = $("#ddlmedicine1 option:selected").text();
+        //var q = $('#quanity').val();
+        //var quan = quanityMedicine - q;
+        $.ajax({
+            type: "Get",
+            data: { batch: batch, quantity: quantity },
+            url: "/Admin/Updatequantity",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+               // alert(response);
+            }
+        });
+
+    }
+
+
+    var cost_price = 0;
+    var k = 0;
+    //var quantity = 0;
+    var medicinename = 0;
+
+
+    function getMrp() {
+        batch = $('#ddlmedicine1 :selected').text();
+        $.ajax({
+            type: "Get",
+            data: { batch: batch },
+            url: "/Admin/GetMedicineDetails",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                //medicinename = response[0].medicine_name;
+                cost_price = response[0].costprice;
+                //quantity = response[0].Quantity;
+                $('#mrp').val(response[0].mrp);
+                $('#expDate').val(response[0].ExpiryDate);
+                quanityMedicine = response[0].Quantity;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+
+    }
+
+    function getdetailsfromemail() {
+        var emailid = $('#userlist').val();
+        $.ajax({
+            type: "Get",
+            data: { emailid: emailid },
+            url: "/Admin/getdetailsfromemail",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                $('#userPhoneNo').html(response[0].name);
+                $('#username').html(response[0].phno);
+                $('#userPhoneNo1').html(response[0].name);
+                $('#username1').html(response[0].phno);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+
+    }
+
+    function GetMedicine() {
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/GetMedicineName",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#ddlmedicine").append($("<option></option>").html(response[i].medicine_name));
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+    }
+
+    var invoicedata = [];
+    var medicinesale = [];
+
+    function Fillinvoicedata() {
+        debugger;
+        var array = {};
+        array.Medicine_name = $("#ddlmedicine option:selected").text();
+        var mrp = $('#mrp').val();
+        var ExpiryDate1 = $('#expDate').val();
+        if ('/Date(-62135596800000)/' != ExpiryDate1) {
+            var DateOffset = new Date(parseInt(ExpiryDate1.replace(/\/+Date\(([\d+-]+)\)\/+/, '$1')));
+            var NewDateoffset = new Date(DateOffset);
+            expDate = NewDateoffset.getMonth() + 1 + "/" + NewDateoffset.getDate() + "/" + NewDateoffset.getFullYear();
+        }
+        array.ExpiryDate = expDate;
+        array.Quantity = $('#quanity').val();
+        if (parseInt(array.Quantity) > parseInt(quanityMedicine)) {
+            alert("Not Available in Stock");
+            return false;
+        }
+        else {
+            quantity = quanityMedicine - array.Quantity;
+
+        }
+        array.total = array.Quantity * mrp;
+        invoicedata.push(array);
+        array.profit_total = array.Quantity * cost_price;
+        //array.total = array.Quantity * mrp;
+
+       
+        $('#expDate').val("");
+        $('#ddlmedicine').val("");
+        $('#ddlmedicine1').val("");
+        $('#mrp').val("");
+        $('#quanity').val("");
+        $('#GridData').html("");
+        GridData(invoicedata);
+        debugger;
+        GridData1(invoicedata);
+
+
+    }
+    var d = 0;
+    var amoountaftrDiscount = 0;
+    var totalAmount = 0;
+    var profit_per_bill = 0;
+    var profit_per_medicine = 0;
+
+    function GridData(response) {
+        var Html = "";
+        totalAmount = 0;
+        profit_per_medicine = 0;
+        var expDate = "";
+        if (response.length == 0) {
+            Html += "<div > No Records To Display"
+            Html += "</div>";
+        }
+        else {
+            for (var i = 0; i < response.length; i++) {
+                debugger;
+                totalAmount += response[i].total;
+                profit_per_medicine += response[i].profit_total;
+                Html += "<div class='InnerGridText'>" + response[i].Medicine_name + "</div>";
+                Html += "<div class='InnerGridText'>" + response[i].Quantity + "</div>";
+                Html += "<div class='InnerGridText'>" + response[i].ExpiryDate + "</div>";
+                Html += "<div class='InnerGridText '>" + response[i].total + "</div>";
+            }
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+
+            Html += "<div class='InnerGridText ' style='border:none; width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' > Total Amount</div>";
+            Html += "<div class='InnerGridText ' id='totalamount' style='border-left: 0px;'>" + totalAmount + "</div>";
+
+            Html += "<div class='InnerGridText ' style='border:none;width:221px; bo'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' id='discounts'>Discount(%)</div>";
+            Html += "<div class='InnerGridText ' style='border-left: 0px;'><input type='Text' id='txtdiscount' style='width:100px;'/>";
+            Html += "<input type='button' value='Calculate'  style='margin-left:2px;'  onclick='calculateDiscount();'/></div>";
+
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText '>Bill Amount</div>";
+            Html += "<div class='InnerGridText ' id='amountafterDisountFinal' style='border-left: 0px;'></div>";
+
+            //Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            //Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            //Html += "<div class='InnerGridText '>profit</div>";
+            //Html += "<div class='InnerGridText ' id='profit' style='border-left: 0px;'></div>";
+
+        }
+        document.getElementById('GridData').innerHTML = Html;
+    }
+
+
+    function GridData1(response) {
+        var Html = "";
+        totalAmount = 0;
+        var expDate = "";
+        if (response.length == 0) {
+            Html += "<div > No Records To Display"
+            Html += "</div>";
+        }
+        else {
+            for (var i = 0; i < response.length; i++) {
+                debugger;
+                totalAmount += response[i].total;
+                Html += "<div class='InnerGridText'>" + response[i].Medicine_name + "</div>";
+                Html += "<div class='InnerGridText'>" + response[i].Quantity + "</div>";
+                Html += "<div class='InnerGridText'>" + response[i].ExpiryDate + "</div>";
+                Html += "<div class='InnerGridText '>" + response[i].total + "</div>";
+            }
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+
+            Html += "<div class='InnerGridText ' style='border:none; width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' > Total Amount</div>";
+            Html += "<div class='InnerGridText ' id='totalamount' style='border-left: 0px;'>" + totalAmount + "</div>";
+
+            Html += "<div class='InnerGridText ' style='border:none;width:221px; bo'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' id='discounts'>Discount(%)</div>";
+            Html += "<div class='InnerGridText ' id='txtxdiscount' style='border-left: 0px;'>";
+            Html += "</div>";
+
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText ' style='border:none;width:221px'></div>";
+            Html += "<div class='InnerGridText '>Bill Amount</div>";
+            Html += "<div class='InnerGridText ' id='amountafterDisountFinal1' style='border-left: 0px;'></div>";
+        }
+
+        document.getElementById('GridData1').innerHTML = Html;
+    }
+
+
+    function SaveInvoiceInfo() {
+
+        var emailid = $('#userlist').val();
+        var totalamount = document.getElementById('totalamount').innerHTML;
+        var discount = $('#txtdiscount').val();
+        var amountafterDisountFinal = document.getElementById('amountafterDisountFinal').innerHTML;
+        var medDetails = invoicedata;
+
+
+
+        $.ajax({
+            type: "Get",
+            data: { emailid: emailid, totalamount: totalamount, discount: discount, amountafterDisountFinal: amountafterDisountFinal, profit_per_bill: profit_per_bill, medDetails: JSON.stringify(medDetails) },
+            url: "/Admin/SaveInvoiceInfo",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+                printReport();
+                //                $('#userPhoneNo').html(response[0].name);
+                //                $('#username').html(response[0].phno);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+    }
+    function printReport() {
+        debugger;
+        var reportDiv = "";
+        reportDiv = document.getElementById("InvoiceP1");
+        var html = '<html><head><link rel="stylesheet" type="text/css" href="../../Content/Style.css" /></head><body >' + reportDiv.innerHTML + '</body></html>';
+        var printWin = window.open("", "processPrint");
+        printWin.document.open();
+        printWin.document.write(html);
+        printWin.document.close();
+        printWin.print();
+    }
+
+    function calculateDiscount() {
+        debugger;
+        $("#txtxdiscount").html("");
+        d = $('#txtdiscount').val();
+        $("#txtxdiscount").html(d);
+        amoountaftrDiscount = totalAmount - ((parseInt(d) / 100) * totalAmount);
+        profit_per_bill = amoountaftrDiscount - profit_per_medicine;
+        $('#amountafterDisountFinal').html(amoountaftrDiscount);
+        $('#amountafterDisountFinal1').html(amoountaftrDiscount);
+        //$('#profit').html(profit_per_bill);
+    }
+</script>
+<div id='ddluserlist'>
+    <div class="headind">
+        User 's</div>
+    <div class='userdddl'>
+        <select id='userlist'>
+            <option value='0'>--Select User--</option>
+        </select>
+    </div>
+    <div class="AddVendor" id="btnSubmit" onclick="showuserDiv(); ">
+        Add User</div>
+    <div class="InvoiceBtn" id="btnSubmit" onclick="ShowInvoice();">
+        Generate Invoice</div>
+</div>
+<div class='UserInfoData' id='UserInfoData' style='display: none;'>
+    <div class="headind">
+        Add User</div>
+    <div class="TextBoxMainDiv">
+        <div class="TextBoxMainDiv">
+            <div class="LabelDiv">
+                Name</div>
+            <div class="LabelDiv">
+                <input placeholder="Name" type="text" id="txtname" /></div>
+            <div class="LabelDiv">
+                Email</div>
+            <div class="LabelDiv">
+                <input type="text" id="email" /></div>
+        </div>
+        <div class="TextBoxMainDiv" style="height: 60px;">
+            <div class="LabelDiv">
+                Phone No.</div>
+            <div class="LabelDiv">
+                <input type="text" id="phoneno" /></div>
+        </div>
+    </div>
+    <div class="TextBoxMainDiv">
+        <div class="btnsubmit" id="btnSubmit" style="margin-left: 12px" onclick="SaveUserdata(); sendsms();">
+            Submit</div>
+        <div class="btnsubmit" id="btnDone" style="margin-left: 12px" onclick=" ShowUserList()">
+            Back</div>
+    </div>
+</div>
+<div id='InvoiceP' style="display: none;">
+    <div id='Invoice'>
+        <div class="headind">
+            Invoice
+        </div>
+        <div class='Userinnn' id='username'>
+        </div>
+        <div class='Userinnn' id='userPhoneNo'>
+        </div>
+        <div style='margin-top: 30px; font-family: Segoe UI; font-size: 14px; margin-left: 15px;
+            padding-bottom: 50px; width:900px; '>
+            <div class='medddeee'>
+                Medicine
+                <select id='ddlmedicine'>
+                    <option value='0'>-----Select Medicine-----</option>
+                </select>
+            </div>
+            <div class='medddeee'>
+                Batch_No
+                <select id='ddlmedicine1'>
+                    <option value='0'>-----Select Batch_no-----</option>
+                </select>
+            </div>
+            <div class='medddeee' >
+                Mrp
+                <input type="text" id="mrp" disabled="disabled" /></div>
+            <div class='medddeee' style="margin-top:10px">
+                Quantity
+                <input type="text" id="quanity" />
+                <input type="text" id="expDate" style='display: none;' />
+            </div>
+            <div class="AddVendor" style='margin-top: 0; padding-top: 0; height: 22px; margin-right: 0px;'
+                id="btnSubmit" onclick="Fillinvoicedata();  UpdateQuantity(); cleardropdown(); ">
+                Next</div>
+        </div>
+        <div class="ParentGridDiv" style="height: 280px;">
+            <div class="Header">
+                Medicine Name</div>
+            <div class="Header">
+                Quantity
+            </div>
+            <div class="Header">
+                Expiry Date
+            </div>
+            <div class="Header">
+                Amount
+            </div>
+            <div class="HtmlData" id="GridData">
+            </div>
+        </div>
+        <div class="btnsubmit" id="ShowPopUpPrint" style="margin-right: 60px; margin-top: 30px;"
+            onclick="SaveInvoiceInfo()">
+            Submit</div>
+    </div>
+</div>
+
+
+
+
+<div id="InvoiceP1" style="">
+    <p style="text-align:center;font-size:25px;">Medico Solutions</p>
+    <div style="float:right; font-family:'Segoe UI';padding-right:10px; margin-top: -40px;">JIIT Sec-128 Noida
+        <br />
+        +9198989889
+    </div>
+    <div id="Invoice">
+        <div class="headind" style="margin-left: 135px;">
+            Invoice
+
+        </div>
+        <div class="Userinnn" id="username1"></div>
+        <div class="Userinnn" id="userPhoneNo1"></div>
+        <div style="margin-top: 30px; font-family: Segoe UI; font-size: 14px; margin-left: 15px; padding-bottom: 50px;">
+            
+        </div>
+        <div class="ParentGridDiv" style="height: 280px;">
+            <div class="Header">
+                Medicine Name
+            </div>
+            <div class="Header">
+                Quantity
+            </div>
+            <div class="Header">
+                Expiry Date
+            </div>
+            <div class="Header">
+                Amount
+            </div>
+           <div class="HtmlData" id="GridData1">
+            </div>
+           
+
+        </div><br /><br />
+       Terms & Conditions-:<br />
+          1. All disputes are subject to Delhi Jurisdiction.<br />                              
+          2. Goods Once Sold Will Not Be Returned Or Replaced<br />
+          3. Loose and cutting medicine are not sold.<br />                                   
+          <br /><br /><br /><br />
+        For MEDICO SOLUTIONS
+        <br />
+        <br />
+        (PHARMACIST/PROPREITOR)
+       
+    </div>
+       
+</div>
+
+
+<style>
+    #ddluserlist
+    {
+        margin: 0 auto;
+        width: 1024px;
+        background-color: #efefef;
+        height: 150px;
+        margin-top: 7px;
+    }
+    #UserInfoData
+    {
+        margin: 0 auto;
+        width: 1024px;
+        background-color: #efefef;
+        height: 170px;
+        margin-top: 7px;
+    }
+    
+    #InvoiceP
+    {
+        margin: 0 auto;
+        width: 1024px;
+        height: 475px;
+        background-color: #efefef;
+        margin-top: 7px;
+    }
+</style>

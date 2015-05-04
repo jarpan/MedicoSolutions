@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Customerhome";
+    Layout = "~/Views/Admin/_LayoutPageCustomer.cshtml";
+
+}
+<script type="text/javascript">
+    document.title = "Home";
+
+
+    $(document).ready(function () {
+
+      
+        SlideShow();
+
+    });
+
+  /*  var ival = 0;
+    var img1 = new Array('../../Content/ImagesSlider/2122.jpg', '../../Content/ImagesSlider/morchemist-banner.jpg', '../../Content/ImagesSlider/chemist-with-vials.jpg', '../../Content/ImagesSlider/bigstock-Young-chemist-working-in-labor-3.jpg', '../../Content/ImagesSlider/88_1capital_chemist_2.jpg')
+
+    function SlideShow() {
+        
+        document.getElementById('abc').src = img1[ival];
+        if (ival < 4)
+            ival++;
+
+        else
+            ival = 0;
+        setTimeout("SlideShow()", 3500);
+    }
+    */
+
+    /*--------------------------*/
+    var Home_Slider_Config = { sliderTimeoutId: 0, transitionTime: 3000, isSliderStarted: false, ival: 0, img1: ['../../Content/ImagesSlider/2122.jpg', '../../Content/ImagesSlider/morchemist-banner.jpg', '../../Content/ImagesSlider/chemist-with-vials.jpg', '../../Content/ImagesSlider/bigstock-Young-chemist-working-in-labor-3.jpg', '../../Content/ImagesSlider/88_1capital_chemist_2.jpg'] }
+
+
+    function SlideShow() {
+        if (!Home_Slider_Config.isSliderStarted) {
+            Home_Slider_Config.sliderTimeoutId = setInterval(SlideShow, Home_Slider_Config.transitionTime);
+            Home_Slider_Config.isSliderStarted = true;
+            document.getElementById('abc').onmouseover = function () {
+                clearInterval(Home_Slider_Config.sliderTimeoutId);
+                Home_Slider_Config.isSliderStarted = false;
+            }
+            document.getElementById('abc').onmouseout = function () {
+                SlideShow();
+            }
+
+
+        }
+        document.getElementById('abc').src = Home_Slider_Config.img1[Home_Slider_Config.ival];
+        if (Home_Slider_Config.ival < 4)
+            Home_Slider_Config.ival++;
+        else
+            Home_Slider_Config.ival = 0;
+
+    }
+
+
+    /*---------------*/
+
+    </script>
+
+<div class="HomeCenter" >
+<img  id='abc' class="HomeCenter"/>
+</div>
+<div class="Home2">
+<div class="Home2Text">
+    
+Welcome to Medical Solutions
+
+</div>
+<div class="HomeimgDiv" style="background-color:#00afd4">
+     <a target="_blank" href="http://www.amway.in/"><img src="../../Content/ImagesSlider/123.png" alt="Medico Solution" width="150" height="150"></a>
+</div>
+<div class="HomeimgDiv" style="background-color:#487688">
+    <a target="_blank" href="http://www.ranbaxy.com/"><img src="../../Content/ImagesSlider/logo1.jpg" alt="Medico Solution" width="150" height="150"></a>
+</div>
+<div class="HomeimgDiv" style="background-color:#15546a">
+     <a target="_blank" href="http://www.himalayaherbals.com/"><img src="../../Content/ImagesSlider/163.png" alt="Medico Solution" width="150" height="150"></a>
+</div>
+<div class="HomeimgDiv" style="background-color:#808080">
+      <a target="_blank" href="http://www.cipla.com/"><img src="../../Content/ImagesSlider/Cipla.png" alt="Medico Solution" width="150" height="150"></a>
+</div>
+</div>
+
+

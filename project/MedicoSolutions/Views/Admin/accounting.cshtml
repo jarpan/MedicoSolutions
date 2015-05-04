@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "accounting";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+<link href="../../Content/Style.css" rel="stylesheet" type="text/css" />
+<script src="../../Scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        GetAccount();
+    });
+
+    function GetAccount() {
+
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/GetAccountDetails",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                GridData(response);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+
+    }
+
+    var Html = "";
+    var totalprofit = 0;
+    var totalsales = 0;
+    function GridData(response) {
+
+        if (response.length == 0) {
+            Html += "<div > No Records To Display"
+            Html += "</div>";
+        }
+        else {
+            debugger;
+            for (var i = 0; i < response.length; i++) {
+                totalprofit += response[i].profit;
+                totalsales += response[i].sales;
+
+                if ('/Date(-62135596800000)/' != response[i].invoice_date) {
+                    var DateOffset = new Date(parseInt(response[i].invoice_date.replace(/\/+Date\(([\d+-]+)\)\/+/, '$1')));
+                    var NewDateoffset = new Date(DateOffset);
+                    expDate = NewDateoffset.getMonth() + 1 + "/" + NewDateoffset.getDate() + "/" + NewDateoffset.getFullYear();
+
+                }
+                Html += "<div class='InnerGridText123'>" + expDate + "</div>";
+                Html += "<div class='InnerGridText123' >" + response[i].profit + "</div>";
+
+                Html += "<div class='InnerGridText123'>" + response[i].sales + "</div>";
+
+                //Html += "<a href='/admin/Medicine/Medicine_Id=?" + response[i].medicine_id + "'>";
+                //Html += "<div class='actionedit'>";
+                //Html += "    </div></a>";
+
+                //Html += "<a onclick=\" return deleteMedicine('" + response[i].medicine_id + "')\">";
+                //Html += "<div class='actiondel' ></div></a>";
+                //Html += "</div>";
+            }
+            Html += "<div style='width:600px;float:left;height:35px;'></div>";
+            Html += "<div class='InnerGridText123'>Total-:</div>";
+            Html += "<div class='InnerGridText123'>" +Math.round(totalprofit) + "</div>";
+            //Html += "<div class='InnerGridText123'></div>";
+            Html += "<div class='InnerGridText123'>" + Math.round(totalsales) + "</div>";
+            //Html += "<div class='InnerGridText123'></div>";
+        } 
+       
+        document.getElementById('GridData').innerHTML = Html;
+        //$("#tp").html(totalprofit);
+    }
+
+</script>
+
+
+
+
+
+<div class="VendorCenter" style="height: 450px;">
+    <div class="headind">
+        Accounts
+    </div>
+    <div class="ParentGridDiv">
+        <div class="Header123">
+            Date Of Bill
+        </div>
+        <div class="Header123">
+            Profit
+        </div>
+        <div class="Header123">
+            Sales
+        </div>
+        @*<div class="Header">
+            Action</div>*@
+        <div class="HtmlData" id="GridData">
+        </div>
+    </div>
+    <div id="tp"></div>
+
+   @* <div class="AddVendor" id="btnSubmit" onclick="SaveMedicinedata()">
+        <a href='/admin/vendor' style="text-decoration: none; color: White;">Add Vendor</a>
+    </div>*@
+</div>
+

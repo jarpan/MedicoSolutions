@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "Medicine";
+    Layout = "~/Views/Admin/_LayoutPageAdmin.cshtml";
+}
+<script src="../../Scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    var urlParams;
+    function getAllParams() {
+
+        var match, pl = /\+/g, // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query = window.location.search.substring(1);
+
+        Medicine_Id = query;
+    };
+
+    var Medicine_Id = "";
+
+    $(document).ready(function () {
+        GetVendorName();
+        getAllParams();
+        getmedtype();
+        GetMedicineDetails(Medicine_Id);
+        if (Medicine_Id == "") {
+            $("#btnSubmit").show();
+            $("#btnDone").hide();
+            $("#txtExpDate1").hide();
+        }
+        else {
+            $("#btnSubmit").hide();
+            $("#btnDone").show();
+            $("#txtDdate").show();
+            $("#txtExpDate").hide();
+        }
+    });
+
+    function GetMedicineDetails(Medicine_Id) {
+        
+        $.ajax({
+            type: "Get",
+            data: { Medicine_Id: Medicine_Id },
+            url: "/Admin/GetMedicineDetails",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+
+                $('#txtname').val(response[0].medicine_name);
+                $('#ddlvendor').val(response[0].SuppliedBy);
+                $('#ddlMedType').val(response[0].MedicineType);
+                $('#txtMrp').val(response[0].mrp);
+                $('#txtCp').val(response[0].costprice);
+                $('#txtQty').val(response[0].Quantity);
+
+                if ('/Date(-62135596800000)/' != response[0].ExpiryDate) {
+                    var DateOffset = new Date(parseInt(response[0].ExpiryDate.replace(/\/+Date\(([\d+-]+)\)\/+/, '$1')));
+                    var NewDateoffset = new Date(DateOffset);
+                    document.getElementById('txtExpDate1').value = NewDateoffset.getMonth() + 1 + "/" + NewDateoffset.getDate() + "/" + NewDateoffset.getFullYear();
+                    
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
+    }
+
+
+    function SaveMedicinedata() {
+        var name = $('#txtname').val();
+        var vendor = $('#ddlvendor').val();
+        var MedicineType = $('#ddlMedType').val();
+        var mrp = $('#txtMrp').val();
+        var cp = $('#txtCp').val();
+        var qty = $(' #txtQty').val();
+        var ExpDate = $('#txtExpDate').val();
+        $.ajax({
+            type: "Get",
+            data: { name: name, vendor: vendor, MedicineType: MedicineType, mrp: mrp, cp: cp, qty: qty, ExpDate: ExpDate },
+            url: "/Admin/SaveMedicinedata",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+            }
+        });
+
+    }
+
+
+    function UpdateMedicinedata() {
+        var mid = Medicine_Id;
+        var name = $('#txtname').val();
+        var vendor = $('#ddlvendor').val();
+        var MedicineType = $('#ddlMedType').val();
+        var mrp = $('#txtMrp').val();
+        var cp = $('#txtCp').val();
+        var qty = $(' #txtQty').val();
+        $.ajax({
+            type: "Get",
+            data: { name: name, vendor: vendor, MedicineType: MedicineType, mrp: mrp, cp: cp, mid: mid, qty: qty },
+            url: "/Admin/UpdateMedicinedata",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+            }
+        });
+
+    }
+
+
+    function GetVendorName() {
+
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/GetVendorName",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#ddlvendor").append($("<option></option>").val(response[i].vendor_id).html(response[i].name));
+                }
+                //response[0].vendor_id
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("Error");
+            }
+        });
+
+    }
+
+    function getmedtype() {
+        $.ajax({
+            type: "Post",
+            data: {},
+            url: "/Admin/getmedtype",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                debugger;
+                for (var i = 0; i < response.length; i++) {
+                    $("#ddlMedType").append($("<option></option>").val(response[i].id).html(response[i].type));
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
+    }
+
+
+</script>
+<div class="VendorCenter">
+    <div class="headind">
+        Medicine</div>
+    <div class="TextBoxMainDiv">
+        <div class="TextBoxMainDiv">
+            <div class="LabelDiv">
+                Medicine Name</div>
+            <div class="LabelDiv">
+                <input placeholder="Name" type="text" id="txtname" /></div>
+            <div class="LabelDiv">
+                Supplied By</div>
+            <div class="LabelDiv">
+                <select id="ddlvendor" style="width: 162px;">
+                    <option value="0">--Select Vendor--</option>
+                </select></div>
+        </div>
+        <div class="TextBoxMainDiv">
+            <div class="LabelDiv">
+                Expiry Date</div>
+            <div class="LabelDiv">
+                <input  type="date" id="txtExpDate" />
+                <input  type="text" id="txtExpDate1" disabled="disabled" />
+                </div>
+            <div class="LabelDiv">
+               Quantity</div>
+            <div class="LabelDiv">
+                <input  type="text" id='txtQty' placeholder="Quantity"/>
+                </div>
+        </div>
+        <div class="TextBoxMainDiv">
+            <div class="LabelDiv">
+                Medicine Type</div>
+            <div class="LabelDiv">
+                <select id="ddlMedType" style="width: 162px;">
+                    <option value="0">--Select Type--</option>
+                </select></div>
+            <div class="LabelDiv">
+                MRP</div>
+            <div class="LabelDiv">
+                <input type="text" id="txtMrp" /></div>
+        </div>
+        <div class="TextBoxMainDiv">
+            <div class="LabelDiv">
+                Cost Price</div>
+            <div class="LabelDiv">
+                <input type="text" id="txtCp" /></div>
+            <div class="LabelDiv">
+            </div>
+            <div class="TextBoxMainDiv">
+                <div class="btnsubmit" id="btnSubmit" onclick="SaveMedicinedata()">
+                    Submit</div>
+                <div class="btnsubmit" id="btnDone" onclick="UpdateMedicinedata()">
+                    Done</div>
+            </div>
+        </div>
+    </div>

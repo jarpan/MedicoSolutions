@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2BDDDA76-FEE2-48F2-A094-AB4DE9CE5720}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MedicoSolutions</RootNamespace>
+    <AssemblyName>MedicoSolutions</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ASPSnippets.SmsAPI">
+      <HintPath>C:\Users\Arpan\Downloads\ASPSnippets.SmsAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Twilio.Api">
+      <HintPath>..\packages\Twilio.3.6.24\lib\3.5\Twilio.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.Mvc">
+      <HintPath>..\packages\Twilio.Mvc.3.1.12\lib\3.5\Twilio.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Twilio.Twiml">
+      <HintPath>..\packages\Twilio.TwiML.3.3.5\lib\3.5\Twilio.Twiml.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\ActionResult.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Entity\Accounting.cs" />
+    <Compile Include="Entity\company.cs" />
+    <Compile Include="Entity\feedback1.cs" />
+    <Compile Include="Entity\invoice.cs" />
+    <Compile Include="Entity\medicine.cs" />
+    <Compile Include="Entity\Searchmedicine.cs" />
+    <Compile Include="Entity\sms.cs" />
+    <Compile Include="Entity\user.cs" />
+    <Compile Include="Entity\vendor.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\ImagesSlider\123.png" />
+    <Content Include="Content\ImagesSlider\163.png" />
+    <Content Include="Content\ImagesSlider\2122.jpg" />
+    <Content Include="Content\ImagesSlider\88_1capital_chemist_2.jpg" />
+    <Content Include="Content\ImagesSlider\bigstock-Young-chemist-working-in-labor-3.jpg" />
+    <Content Include="Content\ImagesSlider\chemist-with-vials.jpg" />
+    <Content Include="Content\ImagesSlider\Cipla.png" />
+    <Content Include="Content\ImagesSlider\logo1.jpg" />
+    <Content Include="Content\ImagesSlider\morchemist-banner.jpg" />
+    <Content Include="Content\Images\1413126280_Erase.png" />
+    <Content Include="Content\Images\1413127274_698652-icon-136-document-edit-16.png" />
+    <Content Include="Content\Images\1417380489_print_printer.png" />
+    <Content Include="Content\Images\9.jpg" />
+    <Content Include="Content\Images\ajain.jpg" />
+    <Content Include="Content\Images\gjain.jpg" />
+    <Content Include="Content\Images\gradientheader.png" />
+    <Content Include="Content\Images\gradientheader1.png" />
+    <Content Include="Content\Images\loc.png" />
+    <Content Include="Content\Images\logo_flat.png" />
+    <Content Include="Content\Images\mail.png" />
+    <Content Include="Content\Images\Medical-Solutions-Advanced-Practice-300x191.png" />
+    <Content Include="Content\Images\MS_Logo.png" />
+    <Content Include="Content\Images\shanky.jpg" />
+    <Content Include="Content\Images\Skyblue.jpg" />
+    <Content Include="Content\Images\tarun.jpg" />
+    <Content Include="Content\Images\tel.png" />
+    <Content Include="Content\Style.css" />
+    <Content Include="Content\themes\Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\Images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\Images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\Images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\Images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\Images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\Images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\Images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\Images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\jquery-ui.css" />
+    <Content Include="Content\themes\Login.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\_LayoutPageAdmin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\ViewPage1.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\Vendor.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\themes\Images\vssver2.scc" />
+    <Content Include="Views\Admin\Medicine.cshtml" />
+    <Content Include="Views\Admin\MedicineList.cshtml" />
+    <Content Include="Views\Admin\VendorList.cshtml" />
+    <Content Include="Views\Admin\Invoice.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\accounting.cshtml" />
+    <Content Include="Views\Admin\Customerhome.cshtml" />
+    <Content Include="Views\Admin\_LayoutPageCustomer.cshtml" />
+    <Content Include="Views\Admin\Maps.cshtml" />
+    <Content Include="Views\Admin\SMS.cshtml" />
+    <Content Include="packages.config" />
+    <Content Include="Views\Admin\Customershowinvoice.cshtml" />
+    <Content Include="Views\Admin\Admin_login.cshtml" />
+    <Content Include="Views\Admin\Main_page.cshtml" />
+    <Content Include="Views\Admin\Main_home.cshtml" />
+    <Content Include="Views\Admin\Search_medicine.cshtml" />
+    <Content Include="Views\Admin\Admin_customer.cshtml" />
+    <Content Include="Views\Admin\Contactus.cshtml" />
+    <Content Include="Views\Admin\Feedbackform.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49159</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
